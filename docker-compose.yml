@@ -1,0 +1,9 @@
+version: '2'
+services:
+  web:
+    build: .
+    container_name: artbot
+    ports:
+      - '8088:80'
+    volumes:
+      - '.:/usr/src/app'
