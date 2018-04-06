@@ -9,6 +9,9 @@ class Console:
             description='Tweet piece of art')
         t.add_argument('--additional',
                        default=None, help='Additional text to appear in the tweet')
+        t.add_argument('--key',
+                       default=None, help='The API key')
+
         self.parser = t
 
     def interpret(self):
@@ -32,7 +35,7 @@ class Console:
 
 
     def fetch(self, args):
-        f = fetcher.Artsy(additional=args.additional)
+        f = fetcher.RijksMuseum(additional=args.additional, key=args.key)
         f.prepare()
         f.fetch_art()
         return self

@@ -1,6 +1,6 @@
 # Base Settings
 
-BASE_URL = 'https://musicbrainz.org'
+BASE_URL = 'https://www.rijksmuseum.nl'
 BASE_FOLDER = './art/'
 SAVE_IMAGES_IN_FORMAT = '.jpg'
 
