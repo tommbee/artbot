@@ -8,8 +8,7 @@ from random import choice
 
 
 class RijksMuseum:
-    def __init__(self, additional=False, key=False):
-        self._text = additional
+    def __init__(self, key=False):
         self._key = key
         self._collection = artbot.art_collection
 

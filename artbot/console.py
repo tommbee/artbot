@@ -14,7 +14,7 @@ class Console:
 
         self.parser = t
 
-    def interpret(self):
+    def parse(self):
         elapsed = time.time()
         try:
             args = self.parser.parse_args()
@@ -29,20 +29,21 @@ class Console:
             print('\ndone (%.2f sec)' % (time.time() - elapsed))
 
     def main(self, args):
-        return self.fetch(args).tweet()
+        return self.fetch(args).tweet(args)
 
     def fetch(self, args):
-        f = fetcher.RijksMuseum(additional=args.additional, key=args.key)
+        f = fetcher.RijksMuseum(key=args.key)
         f.prepare()
         f.fetch_art()
         return self
 
-    def tweet(self):
+    def tweet(self, args):
+        text = args.text
         # get artwork
         artwork = []
-        tweeter.Tweet(artwork).publish()
+        tweeter.Tweet(artwork, text).publish()
         return self
 
 
 def main():
-    Console().interpret()
+    Console().parse()
