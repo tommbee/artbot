@@ -9,6 +9,7 @@ class Scheduler:
         self._time_interval = settings.TWEET_WAIT_TIME
 
     def start(self):
+        main()
         schedule.every(self._time_interval).minutes.do(main)
 
         while 1:

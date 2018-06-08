@@ -18,7 +18,8 @@ class RijksMuseum:
 
     def fetch_art(self):
         try:
-            url = '/'.join((settings.BASE_URL, 'api/en/collection?format=json')) + ('&key=' + self._key if self._key else '')
+            url = '/'.join((settings.BASE_URL, 'api/en/collection?format=json&ps=100&imgonly=True&type=painting')) + \
+                  ('&key=' + self._key if self._key else '')
             response = requests.get(url, timeout=settings.PAINTINGS_REQUEST_TIMEOUT)
             json_object = response.json()
 
