@@ -1,12 +1,35 @@
-FROM python:3
+FROM centos:7
+
+RUN yum update -y && \
+    yum install -y https://centos7.iuscommunity.org/ius-release.rpm && \
+    yum install -y python36u \
+                   exim \
+                   httpd \
+                   curl \
+                   git \
+                   libaio \
+                   openssl \
+                   supervisor \
+                   python36u-libs \
+                   python36u-devel \
+                   python36u-pip && \
+    yum install -y which gcc && \
+    yum install -y openldap-devel
+
+RUN ln -s /usr/bin/pip3.6 /bin/pip
+RUN rm /usr/bin/python
+RUN ln -s /usr/bin/python3.6 /usr/bin/python
 
 WORKDIR /usr/src/app
 
 COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+
+COPY docker-files/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+RUN pip install --upgrade pip setuptools && \
+    pip install --no-cache-dir -r requirements.txt && \
+    pip install git+https://github.com/Supervisor/supervisor
 
 COPY . .
 
-RUN chmod +x /usr/src/app/start.sh
-
-CMD [ "python", "./artbot.py" ]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
