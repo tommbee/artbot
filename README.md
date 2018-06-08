@@ -1,7 +1,15 @@
-# artbot
-A 21st Century Artwork Bot
+# Dutch Art Bot
+Tweet random artwork from Dutch masters.
 
-run
+## Docker
+The docker image will install all relevant dependencies and start the Twitter service as a Daemon.
+Logs from the supervisor are displayed and updated with any activity.
 ```
-python artbot.py --additional 'Your tweet text'
+docker-compose up
+```
+
+## Change tweet interval
+in  `artbot/settings.py` change the following value:
+```
+TWEET_WAIT_TIME = 1440
 ```
