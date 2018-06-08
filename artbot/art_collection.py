@@ -5,6 +5,9 @@ Art = collections.namedtuple('Art', ['id', 'artist', 'image'])
 
 class ArtCollection:
 
+    def append(self, value):
+        self._collection.append(value)
+
     def __init__(self):
         self._collection = []
 

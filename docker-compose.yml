@@ -3,7 +3,9 @@ services:
   web:
     build: .
     container_name: artbot
+    env_file:
+      - .env
     ports:
-      - '8088:80'
+      - '8086:8086'
     volumes:
       - '.:/usr/src/app'

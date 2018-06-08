@@ -12,12 +12,15 @@ class Console:
         t.add_argument('--key',
                        default=None, help='The API key')
 
+        self._selected_art = False
         self.parser = t
 
     def parse(self):
         elapsed = time.time()
         try:
             args = self.parser.parse_args()
+            if args.key is None:
+                args.key = settings.ART_API_KEY
 
             if not hasattr(args, 'func'):
                 return self.main(args)
@@ -34,14 +37,12 @@ class Console:
     def fetch(self, args):
         f = fetcher.RijksMuseum(key=args.key)
         f.prepare()
-        f.fetch_art()
+        self._selected_art = f.fetch_art()
         return self
 
     def tweet(self, args):
-        text = args.text
-        # get artwork
-        artwork = []
-        tweeter.Tweet(artwork, text).publish()
+        text = args.additional
+        tweeter.Tweet(self._selected_art, text).publish()
         return self
 
 

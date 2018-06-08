@@ -1,4 +1,4 @@
-from artbot.console import main
+from artbot.scheduler import start
 
 if __name__ == '__main__':
-    main()
+    start()

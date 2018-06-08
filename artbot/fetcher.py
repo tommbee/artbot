@@ -1,16 +1,16 @@
 import requests
 import os
-import random
 import shutil
 from . import settings
-import artbot.art_collection
+from artbot.art_collection import ArtCollection
+from artbot.art_collection import Art
 from random import choice
 
 
 class RijksMuseum:
     def __init__(self, key=False):
         self._key = key
-        self._collection = artbot.art_collection
+        self._collection = ArtCollection()
 
     def prepare(self):
         os.makedirs(settings.BASE_FOLDER, exist_ok=True)
@@ -23,20 +23,21 @@ class RijksMuseum:
             json_object = response.json()
 
             for json_art_data in json_object['artObjects']:
-                self._collection.append(json_art_data['objectNumber'], json_art_data['principalOrFirstMaker'],
-                                        json_art_data['webImage']['url'])
+                self._collection.append(Art(json_art_data['objectNumber'],
+                                            json_art_data['principalOrFirstMaker'],
+                                            json_art_data['webImage']['url']))
 
-            self.download_artwork()
+            return self.download_artwork()
 
         except Exception as error:
-            print('\nError %s' % str(error))
+            print('\nError: %s' % str(error))
 
     def download_artwork(self):
         # Get random artwork from selection
         artwork = choice(self._collection)
 
         filename = os.path.join(settings.BASE_FOLDER,
-                                'images',
+                                'art',
                                 str(artwork.id) +
                                 settings.SAVE_IMAGES_IN_FORMAT)
 
@@ -47,6 +48,9 @@ class RijksMuseum:
                 response.raw.decode_content = True
                 shutil.copyfileobj(response.raw, f)
 
+            return artwork
+
         except Exception as error:
-            print('\nError %s' % str(error))
+            print('\nError: %s' % str(error))
             if os.path.exists(filename): os.remove(filename)
+
