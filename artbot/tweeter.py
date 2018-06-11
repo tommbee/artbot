@@ -28,7 +28,8 @@ class Tweet:
                                         str(self._artwork.id) +
                                         settings.SAVE_IMAGES_IN_FORMAT)
 
-                self._api.update_with_media(filename, self._artwork.artist)
+                tweet_text = '"' + self._artwork.title + '"\n' + self._artwork.artist + ' (' + self._artwork.year + ')'
+                self._api.update_with_media(filename, tweet_text)
             except Exception as error:
                 print('\nError: %s' % str(error))
         else:

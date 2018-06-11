@@ -1,6 +1,6 @@
 import collections
 
-Art = collections.namedtuple('Art', ['id', 'artist', 'image'])
+Art = collections.namedtuple('Art', ['id', 'artist', 'image', 'title', 'year'])
 
 
 class ArtCollection:
