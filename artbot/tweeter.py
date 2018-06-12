@@ -28,8 +28,13 @@ class Tweet:
                                         str(self._artwork.id) +
                                         settings.SAVE_IMAGES_IN_FORMAT)
 
-                tweet_text = '"' + self._artwork.title + '"\n' + self._artwork.artist + ' (' + self._artwork.year + ')'
+                tweet_text = '"' + self._artwork.title + '"\n' + \
+                             self._artwork.artist + \
+                             ' (' + self._artwork.year + ')' + \
+                             '\n' + ' '.join(settings.HASH_TAGS)
+
                 self._api.update_with_media(filename, tweet_text)
+
             except Exception as error:
                 print('\nError: %s' % str(error))
         else:
