@@ -17,18 +17,18 @@ class RijksMuseum:
         return self
 
     def fetch_art_detail(self, artwork=False):
-        try:
-            if artwork:
+        if artwork:
+            try:
                 url = '/'.join((settings.BASE_URL, 'api/en/collection/' + artwork.id +
                                 '?format=json')) + \
-                                ('&key=' + self._key if self._key else '')
+                      ('&key=' + self._key if self._key else '')
 
                 response = requests.get(url, timeout=settings.PAINTINGS_REQUEST_TIMEOUT)
                 json_object = response.json()
                 return json_object['artObject']
 
-        except Exception as error:
-            print('\nError: %s' % str(error))
+            except Exception as error:
+                print('\nError: %s' % str(error))
 
     def fetch_art(self):
         try:
@@ -53,7 +53,9 @@ class RijksMuseum:
     def download_artwork(self):
         # Get random artwork from selection
         artwork = choice(self._collection)
-        artwork_obj = Art(*artwork[0:4] + (str(self.fetch_art_detail(artwork)['dating']['sortingDate']),) + artwork[4 + 1:])
+        artwork_obj = Art(*artwork[0:4] +
+                           (str(self.fetch_art_detail(artwork)['dating']['sortingDate']),) +
+                           artwork[4 + 1:])
 
         filename = os.path.join(settings.BASE_FOLDER,
                                 'art',
