@@ -28,10 +28,12 @@ class Tweet:
                                         str(self._artwork.id) +
                                         settings.SAVE_IMAGES_IN_FORMAT)
 
+                hash_tags = ['#'+self._artwork.artist.replace(" ", "")] + settings.HASH_TAGS
+
                 tweet_text = '"' + self._artwork.title + '"\n' + \
                              self._artwork.artist + \
                              ' (' + self._artwork.year + ')' + \
-                             '\n' + ' '.join(settings.HASH_TAGS)
+                             '\n' + ' '.join(hash_tags)
 
                 self._api.update_with_media(filename, tweet_text)
 
