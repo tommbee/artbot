@@ -1,6 +1,8 @@
 # Dutch Art Bot
 Tweet random artwork from Dutch masters.
 
+[twitter.com/DutchArtBot](https://www.twitter.com/DutchArtBot)
+
 ## Docker
 The docker image will install all relevant dependencies and start the Twitter service as a Daemon.
 Logs from the supervisor are displayed and updated with any activity.
